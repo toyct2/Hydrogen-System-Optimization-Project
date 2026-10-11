@@ -1,0 +1,51 @@
+{
+  "scenario": "Cambridge 2013 PVGIS/NEWA; Argentina constant-efficiency LP; fixed HB; N2 storage enabled",
+  "hours": 8760,
+  "annual_ammonia_t": 83950.0,
+  "annual_cost_usd": 99562589.10429795,
+  "annual_alk_equivalent_full_load_hours": 2783.8193253328604,
+  "project_alk_equivalent_full_load_hours": 69595.48313332151,
+  "lcoa_usd_t": 1185.9748553221912,
+  "annual_cost_breakdown_usd": {
+    "initial_capex_annualized": 80636809.6495361,
+    "fixed_om": 17765848.57239324,
+    "battery_replacement_annualized": 1159930.8823685998,
+    "alk_replacement_annualized": 0.0,
+    "grid": 0.0
+  },
+  "capacities": {
+    "wind_mw": 170.65302719541685,
+    "solar_mw": 499.5487345631556,
+    "alk_mw": 304.32120912365843,
+    "bess_mw": 18.068828133692683,
+    "bess_mwh": 51.42478639733845,
+    "h2_tank_t": 213.681764063776,
+    "n2_tank_t": 68.77042349833181,
+    "nh3_tank_t": 0.0,
+    "hb_tph": 9.583333333333334,
+    "h2_compressor_mw": 7.290755859810233,
+    "n2_compressor_mw": 0.7856171817838965,
+    "asu_tph": 8.016501854937719,
+    "ro_mw": 0.31930317634205396,
+    "grid_mw": 0.0
+  },
+  "settings": {
+    "wind_delivery_factor": 0.851,
+    "solar_delivery_factor": 1.0,
+    "battery_round_trip_efficiency": 0.9,
+    "nitrogen_storage_enabled": true,
+    "grid_allowed": false,
+    "fixed_hb_tph": 9.583333333333334,
+    "alk_replacement_years": [],
+    "hb_minimum_fraction": 0.6,
+    "hb_ramp_up_fraction": 0.02,
+    "hb_ramp_down_fraction": 0.2
+  },
+  "solver_status": "optimal",
+  "simultaneous_battery_charge_discharge_hours": 6,
+  "max_power_balance_error_mw": 1.8112622512944654e-11,
+  "max_h2_balance_error_t": 1.4800383141277962e-12,
+  "max_n2_balance_error_t": 1.0800249583553523e-11,
+  "max_nh3_balance_error_t": 0.0,
+  "max_battery_balance_error_mwh": 1.5987211554602254e-14
+}
