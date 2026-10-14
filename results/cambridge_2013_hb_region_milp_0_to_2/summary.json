@@ -1,0 +1,80 @@
+{
+  "scenario": "2013 Cambridge; HB part-load; ALK constant efficiency; replacement MILP; grid on",
+  "hours": 8760,
+  "stages": [
+    {
+      "iteration": 0,
+      "lcoa_usd_t": 995.1224920418805,
+      "alk_mw": 326.25141601644066,
+      "hb_tph": 10.689185097888371,
+      "changed_hours": null,
+      "boundary_tie_hours": 0,
+      "two_cycle_hours": 0,
+      "region_counts": [
+        2187,
+        6573
+      ],
+      "minimum_hb_load": 0.599999999997525,
+      "maximum_hb_load": 1.0000000000189637,
+      "maximum_curve_power_gap_mw": null
+    },
+    {
+      "iteration": 1,
+      "lcoa_usd_t": 986.6678771418583,
+      "alk_mw": 345.79052874985484,
+      "hb_tph": 11.673373501316014,
+      "changed_hours": 868,
+      "boundary_tie_hours": 162,
+      "two_cycle_hours": 0,
+      "region_counts": [
+        1899,
+        6861
+      ],
+      "minimum_hb_load": 0.5999999999967832,
+      "maximum_hb_load": 1.00000000000012,
+      "maximum_curve_power_gap_mw": 0.24281374894003704
+    },
+    {
+      "iteration": 2,
+      "lcoa_usd_t": 986.5112891759026,
+      "alk_mw": 345.7077580291428,
+      "hb_tph": 11.670774792212912,
+      "changed_hours": 198,
+      "boundary_tie_hours": 126,
+      "two_cycle_hours": 50,
+      "region_counts": [
+        1967,
+        6793
+      ],
+      "minimum_hb_load": 0.5999999999266754,
+      "maximum_hb_load": 1.0000000000432372,
+      "maximum_curve_power_gap_mw": 0.24275969413231024
+    }
+  ],
+  "converged_all_hourly_regions": false,
+  "settings": {
+    "hb_part_load_efficiency": true,
+    "alk_part_load_efficiency": false,
+    "alk_replacement_milp": true,
+    "grid_allowed": true,
+    "mip_relative_gap_tolerance": 0.001
+  },
+  "alk_capacity_upper_bound_mw": 1529.118622255503,
+  "alk_capacity_bound_use_fraction": 0.226083021289226,
+  "alk_replacement_years": [],
+  "alk_replacement_present_value_usd": 0.0,
+  "capacities": {
+    "solar_mw": 562.9070308492323,
+    "wind_mw": 10.393679641793788,
+    "alk_mw": 345.7077580291428,
+    "hb_tph": 11.670774792212912,
+    "h2_tank_t": 31.58361673124929,
+    "n2_tank_t": -0.0,
+    "nh3_tank_t": 4812.736983425959,
+    "bess_mw": 8.537506127833435,
+    "bess_mwh": 24.298168411438482,
+    "grid_mw": 3.6888423545613955
+  },
+  "annual_grid_purchase_mwh": 26677.83967120887,
+  "maximum_power_balance_error_mw": 4.2896004970316426e-08
+}

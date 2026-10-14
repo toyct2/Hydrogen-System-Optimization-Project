@@ -25,6 +25,8 @@ class HourlyInputs:
     wind_cf: tuple[float, ...]
     delivery_tph: tuple[float, ...]
 
+    # __post_init__은 dataclass 생성 직후 실행되어 세 시계열의 길이·범위를 확인한다.
+    # 논문 Eq. (1)의 발전량과 Eq. (18)의 출하량을 같은 시간축에 놓기 위한 검사다.
     def __post_init__(self) -> None:
         hours = len(self.solar_cf)
         if hours == 0 or len(self.wind_cf) != hours or len(self.delivery_tph) != hours:
@@ -48,6 +50,9 @@ def read_pvgis_solar(path: Path) -> tuple[float, ...]:
     with path.open(encoding="utf-8") as stream:
         payload = json.load(stream)
     hourly = payload["outputs"]["hourly"]
+    # P는 정격 1 kWp 태양광 설비의 W 출력이며 시스템 손실이 이미 반영되어 있다.
+    # 1,000으로 나누면 설치 1 MWp당 MW 출력(용량계수)과 수치가 같아진다.
+    # 이는 논문 Eq. (1)의 ES(i) 입력을 만드는 전처리이며 논문의 별도 번호식은 아니다.
     return tuple(float(row["P"]) / 1000 for row in hourly)
 
 
@@ -62,7 +67,14 @@ def read_newa_wind(path: Path) -> tuple[float, ...]:
         half_hourly = np.asarray(dataset.variables["WS10"][:], dtype=float)
     if len(half_hourly) != 17_520:
         raise InvalidModelInput("NEWA 파일에는 2013년 30분 표본 17,520개가 필요합니다")
+    # reshape(8760, 2)는 연속된 30분 표본 두 개를 한 시간으로 묶는다.
+    # 10**0.143은 10 m 풍속을 100 m 허브 높이로 옮기는 멱법칙 계수다.
+    # 이 곡선은 Cambridge 공개 데이터의 전처리를 따른다. Argentina 논문 Eq. (1)은
+    # 이미 주어진 풍력 출력 EW(i)을 받으므로 이 전처리의 식 번호는 없다.
     wind_100m = half_hourly.reshape(8760, 2).mean(axis=1) * 10**0.143
+    # np.where는 각 시간 풍속에 세 구간을 한꺼번에 적용한다:
+    # 3 m/s 이하 또는 25 m/s 초과면 0, 3-13은 풍속 세제곱으로 상승,
+    # 13-25는 정격 출력 1.0이다. 반환값에는 0.851 전달계수를 곱하지 않는다.
     power = np.where(
         (wind_100m > 3) & (wind_100m <= 13),
         (wind_100m**3 - 3**3) / (13**3 - 3**3),
@@ -74,4 +86,6 @@ def read_newa_wind(path: Path) -> tuple[float, ...]:
 def cambridge_2013_inputs(root: Path) -> HourlyInputs:
     solar = read_pvgis_solar(root / "pvgis_35.5_-0.5_2013_v52.json")
     wind = read_newa_wind(root / "newa_35.5_-0.5_2013.nc")
+    # 튜플 (230 / 24,)를 시간 수만큼 반복하면 매시간 같은 t/h 출하량이 된다.
+    # 논문 Eq. (21)의 14일 주기·48시간 선적 대신 일정 출하를 입력하는 설정이다.
     return HourlyInputs(solar, wind, (230 / 24,) * len(solar))

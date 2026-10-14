@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 
+# dataclass가 reason을 받는 __init__을 만들고, __str__이 표시할 문구를 정한다.
+# frozen=True는 생성 후 필드 변경을 막고, slots=True는 필드를 슬롯으로 관리한다.
 @dataclass(frozen=True, slots=True)
 class InvalidModelInput(Exception):
     reason: str
